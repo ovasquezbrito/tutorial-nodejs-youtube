@@ -1,12 +1,22 @@
-const http = require('http')
+const express = require('express')
+const app = express()
+const port = 3000
+app.use(express.static(__dirname + "/public"));
 
-const server = http.createServer((req, res) => {
-	console.log("respuesta del servidor")
-	res.end("estoy respondiendo a tu solisitud v.1")
+
+
+app.get("/", (req, res) => {
+	res.send("Hola mundo")
 })
 
-const puerto = 3000
+app.get("/servicios", (req, res) => {
+	res.send("Estas en la página de servicio")
+})
 
-server.listen(puerto, () => {
-	console.log("escuchando solicitudes")
+app.use((req, res, next) => {
+	res.status(404).sendFile(__dirname + "/public/404.html")
+})
+
+app.listen(port, () => {
+	console.log(`Ejemplo de app ejecutandose la rura http://localhost:${port}`)
 })
