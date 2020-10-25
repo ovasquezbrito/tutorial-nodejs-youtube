@@ -1,20 +1,25 @@
 const express = require('express')
 const app = express()
 const port = 3000
+
+// Motor de plantilla
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
+
 app.use(express.static(__dirname + "/public"));
 
 
 
 app.get("/", (req, res) => {
-	res.send("Hola mundo")
+	res.render("index", {titulo: "mi titulo dinámico"})
 })
 
 app.get("/servicios", (req, res) => {
-	res.send("Estas en la página de servicio")
+	res.render("servicios", {titulo: "mi titulo dinámico de servicios"})
 })
 
 app.use((req, res, next) => {
-	res.status(404).sendFile(__dirname + "/public/404.html")
+	res.status(404).render("404", {titulo: "Página no encontrada"})
 })
 
 app.listen(port, () => {
